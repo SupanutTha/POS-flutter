@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require('mongoose');
-const product = require("../models/product.js");
+const product = require("../models/product");
 
-//find all prodduct
+//find all product
 router.get('/', (req, res, next) => {
+    console.log(product)
     product.find()
         .then(products => {
             res.json(products);
@@ -39,6 +40,7 @@ router.post('/', (req, res, next) => {
         })
         .catch(err => {
             console.error(err);
+            console.log(err)
             res.status(500).json({ error: 'Internal Server Error' });
         });
 });
@@ -54,6 +56,7 @@ router.put('/:id', (req, res, next) => {
         })
         .catch(err => {
             console.error(err);
+            console.log(err)
             res.status(500).json({ error: 'Internal Server Error' });
         });
 });
