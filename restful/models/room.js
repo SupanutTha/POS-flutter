@@ -14,7 +14,7 @@ const ImageSchema = new mongoose.Schema({
 
 const RoomSchema = new mongoose.Schema({
     roomNumber: {
-        type: Number,
+        type: String,
         required: true
     },
     roomType: {

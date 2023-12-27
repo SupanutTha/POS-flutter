@@ -6,7 +6,8 @@ const mongoose = require('mongoose')
 const apiKeyMiddleware = require('./authMiddleware'); // Adjust the path as needed
 
 app.use(express.json())
-const product = require('./route/product')
+app.use(bodyParser.json({limit: "50mb"}));
+app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
 const room = require('./route/room')
 mongoose.Promise = global.Promise
 // เปลี่ยน password ด้วย
@@ -19,7 +20,6 @@ app.use(bodyParser.urlencoded({extended : true}))
 //route
 // app.use('/products', product)
 // app.use('/rooms',room)
-app.use('/products', apiKeyMiddleware, product);
 app.use('/rooms', apiKeyMiddleware, room);
 
 

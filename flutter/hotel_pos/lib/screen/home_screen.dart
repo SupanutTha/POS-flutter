@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:hotel_pos/screen/add_room_screen.dart';
+import 'package:hotel_pos/screen/all_room.dart';
 import '../style/app_style.dart';
 
 class HomePage extends StatelessWidget {
@@ -21,7 +22,12 @@ class HomePage extends StatelessWidget {
           OutlinedButton( 
             style: AppButtonStyles.outlinedButtonStyle,
             child: const Text('All room',style: AppTextStyles.welcomeText,),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>  AllRoom()),
+            );
+            },
           ),
           OutlinedButton(
             style: AppButtonStyles.outlinedButtonStyle,

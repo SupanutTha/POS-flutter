@@ -38,6 +38,22 @@ class _AddRoomState extends State<AddRoom> {
     _balconyController = TextEditingController( text: "false");
     _rate = TextEditingController();
   }
+  Future<String> convertImageToBase64(File imageFile) async {
+    List<int> imageBytes = await imageFile.readAsBytes();
+    String base64Image = base64Encode(imageBytes);
+    return base64Image;
+  }
+
+  Future<List<String>> convertImagesToBase64(List<File?> images) async {
+    List<String> base64Images = [];
+    for (File? image in images) {
+      if (image != null) {
+        String base64Image = await convertImageToBase64(image);
+        base64Images.add(base64Image);
+      }
+    }
+    return base64Images;
+  }
 
   List<String> convertControllersToStringList(List<TextEditingController> controllers) {
   List<String> result = [];
@@ -280,6 +296,8 @@ class _AddRoomState extends State<AddRoom> {
         print(_selectedImages);
         print(_rate.text);
         print("done");
+        // Convert images to base64 strings
+      List<String> base64Images = await convertImagesToBase64(_selectedImages);
         // Create a Map to represent the room data
       Map<String, dynamic> roomData = {
         'roomNumber': _roomNumberController.text,
@@ -290,6 +308,7 @@ class _AddRoomState extends State<AddRoom> {
         },
         'amenities': [], // You can add amenities here
         'description': _descriptionController.text,
+        'images':base64Images,
         'features': {
             'beds': int.parse(_bedNumberController.text),
             'bedType': 'Single Bed', // Replace with the actual bed type
@@ -301,7 +320,7 @@ class _AddRoomState extends State<AddRoom> {
         // ... other fields
     };
 
-
+      
       // Send a POST request to your API
       try{
       final response = await http.post(
